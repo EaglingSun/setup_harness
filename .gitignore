@@ -12,6 +12,23 @@ venv/
 .claude-home/
 settings.local.json
 
+# Working files at the kit root (only global/, project/, extras/ and root docs are distributed)
+# Anchored with "/" so project/.claude/ and */CLAUDE.md templates stay tracked
+/.claude/
+/CLAUDE.md
+/CLAUDE.local.md
+/HANDOFF.md
+/phases/
+/docs/
+/scripts/
+/.harness-kit/
+/harness_map.html
+/claude-isolated.*
+/tmp/
+/scratch/
+*.tmp
+*.log
+
 # Installer backups
 *.bak.*
 
