@@ -1,0 +1,22 @@
+# Kit archive (distributed via git clone)
+*.tar.gz
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Claude Code local state (credentials, session history)
+.claude-home/
+settings.local.json
+
+# Installer backups
+*.bak.*
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
