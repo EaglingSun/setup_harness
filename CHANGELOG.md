@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 2026-10-26 — 글로벌 CLAUDE.md 환경 우회 허용 범위
+
+근거: 실습 runner 계정 문제(서비스 모드에서 PATH · gh/claude 인증이 안 보임)를 실습생 claude가 우회할 때 허용 · 금지 선을 미리 정함 · 실장 결정
+
+| 영역 | 변경 |
+|---|---|
+| `global/CLAUDE.md` | 「환경 우회 허용 범위」 섹션 추가 — 내 PC 안만 바꾸면 허용, 저장소나 게이트를 바꾸면 금지. 우회 내용은 보고에 한 줄 |
+
 ## 2026-10-26 — step 0 우선순위 · scope_check 디렉토리 패턴
 
 근거: PR Autofix 실습 1차 실측(test-harness phase `1-loop-nogate`) 하네스 마찰 · 실장 결정 §8 #6
