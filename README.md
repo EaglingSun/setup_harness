@@ -317,7 +317,7 @@ git clean -nd
 | `--isolated는 ... --claude-home <폴더>를 지정하세요` | 독립 모드인데 글로벌이 `~/.claude`로 결정됨 | `--claude-home` 명시 |
 | 모든 step이 `SCOPE VIOLATION` | 추적되지 않은 캐시 등이 변경으로 잡힘 | `.gitignore`에 `__pycache__/` 등이 있는지 확인 (키트가 추가함) |
 | 차단 hook이 동작하지 않음 | bash가 없거나 hook 미등록 | `bash --version`, Claude Code `/hooks` 확인 |
-| 한글이 깨지거나 UnicodeDecodeError | Windows 기본 인코딩 | `set PYTHONUTF8=1` (영구 적용은 `setx PYTHONUTF8 1`) |
+| 한글이 깨지거나 UnicodeDecodeError. `execute.py` 실행 중 `UnicodeDecodeError: 'cp949' codec can't decode` traceback이 나오고 step 완료 직후 `UnicodeEncodeError: 'cp949' codec can't encode character '\u2713'`로 중단, `scope_check.py`가 위반 목록 대신 `... '\u2014'` traceback 출력. 중단은 출력이 파이프로 갈 때(`/run-phase`, Claude Code 안에서 실행, `>` 리디렉션)만 나고, 콘솔에서 직접 실행하면 멈추지 않지만 `step<N>-output.json`의 `stdout`이 `null`로 남음 | `subprocess.run(text=True)`가 Windows 기본 인코딩(cp949)으로 Claude의 UTF-8 출력을 디코딩하다 실패하고, 파이프로 가는 stdout도 cp949로 씀 (콘솔 출력은 Python이 UTF-8로 처리). `✓`·`—`는 cp949에 없음 (Windows 11 Pro 10.0.26200, Python 3.13.13, 발견일 2026-10-25) | `set PYTHONUTF8=1` (PowerShell `$env:PYTHONUTF8="1"`, 영구 적용은 `setx PYTHONUTF8 1` 후 새 터미널). 독립 모드는 설정 후 `claude-isolated.cmd py scripts\execute.py <phase>`. 재실행 전 `phases\<phase>\index.json`에서 멈춘 step의 status를 확인한다. `✓` 줄에서 멈췄으면 이미 커밋되고 completed 상태라 재실행하면 다음 step부터 이어감 |
 | 상위 폴더 CLAUDE.md가 계속 로드됨 | `claudeMdExcludes` 패턴이 Windows 경로와 맞지 않음 | `/memory`로 확인 후 `.claude\settings.local.json` 패턴 조정 |
 | `.claude-home`이 git에 커밋됨 | 설정 폴더(자격 증명, 대화 기록 포함)를 기준선에 포함 | `.gitignore`에 추가 후 `git rm -r --cached .claude-home`, push했다면 재로그인 |
 | `ERROR: 독립 환경으로 설치된 프로젝트인데 CLAUDE_CONFIG_DIR이 없다` | 독립 설치 프로젝트에서 런처 없이 execute.py를 실행함 | `claude-isolated.cmd py scripts\execute.py <phase>`로 실행하거나, 런처로 연 세션에서 `/run-phase` |
