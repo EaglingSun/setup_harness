@@ -19,6 +19,7 @@ Exit code: 0 = 범위 내, 1 = 범위 이탈, 2 = 사용 오류
 
 주의
     fnmatch의 '*'는 '/'도 매칭한다. 즉 `src/auth/*`는 `src/auth/a/b.py`도 허용한다.
+    `/`로 끝나는 패턴(`tests/fixtures/`)은 디렉토리로 읽어 그 아래 파일을 모두 허용한다.
 """
 
 import argparse
@@ -60,6 +61,13 @@ def changed_files(base: str) -> list[str]:
     return sorted(set(tracked + untracked))
 
 
+def matches(path: str, pattern: str) -> bool:
+    """`/`로 끝나는 패턴은 그 디렉토리 아래 전부, 그 밖은 fnmatch로 판정한다."""
+    if pattern.endswith("/"):
+        return path.startswith(pattern)
+    return fnmatch.fnmatch(path, pattern)
+
+
 def main():
     """CLI 진입점: 허용 패턴과 변경 파일을 대조해 위반 목록을 출력한다."""
     p = argparse.ArgumentParser()
@@ -70,7 +78,7 @@ def main():
     allowed = load_allowed(Path(args.step_file)) + ALWAYS_ALLOWED
     violations = [
         f for f in changed_files(args.base)
-        if not any(fnmatch.fnmatch(f, pat) for pat in allowed)
+        if not any(matches(f, pat) for pat in allowed)
     ]
 
     if violations:

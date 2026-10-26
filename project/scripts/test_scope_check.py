@@ -107,6 +107,31 @@ class TestScopeCheck:
         (proj / "phases" / "t" / "step0.md").write_text("# Step 0\n", encoding="utf-8")
         assert _run(proj) == 2
 
+    def test_trailing_slash_allows_directory(self, proj):
+        """
+        대상: main() — `/`로 끝나는 허용 패턴(`fixtures/loop/`) 아래 하위 폴더 파일
+        구분: 정상
+        오라클: (종료코드) 0. `/`로 끝나는 패턴은 디렉토리 접두사로 읽는다.
+        """
+        (proj / "phases" / "t" / "step0.md").write_text(
+            STEP.replace("`src/*`", "`fixtures/loop/`"), encoding="utf-8")
+        (proj / "fixtures" / "loop" / "a").mkdir(parents=True)
+        (proj / "fixtures" / "loop" / "a" / "b.xml").write_text("<x/>\n", encoding="utf-8")
+        assert _run(proj) == 0
+
+    def test_trailing_slash_is_not_name_prefix(self, proj, capsys):
+        """
+        대상: main() — `fixtures/loop/` 패턴과 이름만 앞부분이 같은 파일(`fixtures/loopy.txt`)
+        구분: 경계
+        오라클: (종료코드) 1. 디렉토리 경계에서만 맞는다.
+        """
+        (proj / "phases" / "t" / "step0.md").write_text(
+            STEP.replace("`src/*`", "`fixtures/loop/`"), encoding="utf-8")
+        (proj / "fixtures").mkdir()
+        (proj / "fixtures" / "loopy.txt").write_text("x\n", encoding="utf-8")
+        assert _run(proj) == 1
+        assert "fixtures/loopy.txt" in capsys.readouterr().out
+
 
 def test_nested_ignores_changes_outside_project(tmp_path):
     """

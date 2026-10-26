@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## 2026-10-26 — 글로벌 CLAUDE.md 환경 우회 허용 범위
+
+근거: 실습 runner 계정 문제(서비스 모드에서 PATH · gh/claude 인증이 안 보임)를 실습생 claude가 우회할 때 허용 · 금지 선을 미리 정함 · 실장 결정
+
+| 영역 | 변경 |
+|---|---|
+| `global/CLAUDE.md` | 「환경 우회 허용 범위」 섹션 추가 — 내 PC 안만 바꾸면 허용, 저장소나 게이트를 바꾸면 금지. 우회 내용은 보고에 한 줄 |
+
+## 2026-10-26 — step 0 우선순위 · scope_check 디렉토리 패턴
+
+근거: PR Autofix 실습 1차 실측(test-harness phase `1-loop-nogate`) 하네스 마찰 · 실장 결정 §8 #6
+
+| 영역 | 결함 | 수정 |
+|---|---|---|
+| `/harness` | 원칙 1(한 step 한 레이어)이 원칙 8(step 0 = 최소 e2e)과 부딪히면 step 0을 모듈 하나로 자를 수 있음 | 원칙 1에 「step 0은 원칙 8 우선」 명시 |
+| scope_check | `/`로 끝나는 허용 패턴(`tests/fixtures/loop/`)이 fnmatch 완전 일치라 하위 파일이 모두 위반 | `/`로 끝나면 디렉토리 접두사로 판정 + 테스트 2개 |
+
 ## 2026-10-25 — 첫 정리본
 
 기반: [jha0313/harness_framework](https://github.com/jha0313/harness_framework) + MVP-First Guard
