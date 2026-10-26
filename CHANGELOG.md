@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 2026-10-26 — harness_map 화면 각주
+
+근거: 실장 「harness_map 의 각 요소가 뭔지 그냥 봤을 때 잘 이해가 안 된다」 · 실장 결정(키트 원본에서 고치고 프로젝트에 재설치)
+
+| 영역 | 변경 |
+|---|---|
+| `harness_map.py` | 절 7개 제목 아래 한 줄 각주 · KPI 카드 5개 아래 계산 방법 · Layers 소제목(CRITICAL 규칙 · Hooks · Commands · Skills · Docs · Ancestors) 설명. 문구는 `NOTES` · `KPI_NOTES` · `LAYER_NOTES` 세 곳에만 둔다 — 판정 · 계산은 바꾸지 않음 · 테스트 2개 |
+
 ## 2026-10-26 — 글로벌 CLAUDE.md 환경 우회 허용 범위
 
 근거: 실습 runner 계정 문제(서비스 모드에서 PATH · gh/claude 인증이 안 보임)를 실습생 claude가 우회할 때 허용 · 금지 선을 미리 정함 · 실장 결정
