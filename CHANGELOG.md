@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 2026-11-01 — statusline 3줄 배치
+
+근거: 1줄째가 cwd 로 시작해 경로가 길면 `Ctx Used` 이후가 화면 밖으로 잘림 · 실장 결정(강사 PC 와 같은 배치)
+
+| 영역 | 변경 |
+|---|---|
+| `extras/statusline/statusline-setup.js` | `LAYOUT` 을 1줄 cwd 단독 · 2줄 Model ~ Tokens · 3줄 git · 타이머로 나눔 (위젯 · 색 · 옵션 그대로, cwd 뒤 구분자와 빈 줄 제거). 완료 안내 「두 줄」 → 「세 줄」 |
+
+> build.py 가 없어 원본 `~/.config/ccstatusline/settings.json` 에서 `LAYOUT` 만 같은 규칙(위젯 경로 → `{{WIDGET:이름}}`)으로 다시 만들었다. `lines` 밖 키와 위젯 집합이 그대로인지 코드로 대조함.
+> 이미 설치한 사람은 같은 명령을 다시 실행하면 `ccstatusline/settings.json` 만 바뀐다(이전 파일은 `.bak.<시각>` 으로 백업).
+
 ## 2026-10-26 — 글로벌 CLAUDE.md 환경 우회 허용 범위
 
 근거: 실습 runner 계정 문제(서비스 모드에서 PATH · gh/claude 인증이 안 보임)를 실습생 claude가 우회할 때 허용 · 금지 선을 미리 정함 · 실장 결정

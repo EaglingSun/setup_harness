@@ -39,11 +39,9 @@ const LAYOUT = {
         "id": "1",
         "type": "current-working-dir",
         "color": "cyan"
-      },
-      {
-        "id": "2",
-        "type": "separator"
-      },
+      }
+    ],
+    [
       {
         "id": "3",
         "type": "model",
@@ -159,8 +157,7 @@ const LAYOUT = {
         "type": "block-timer",
         "color": "brightBlack"
       }
-    ],
-    []
+    ]
   ],
   "flexMode": "full-minus-40",
   "compactThreshold": 60,
@@ -359,7 +356,7 @@ function main() {
 
   if (!args.dry) {
     console.log('\n다음 단계');
-    console.log('  1. 이 설정 폴더로 Claude Code 를 새로 실행해 statusline 두 줄이 뜨는지 확인한다 (독립 환경이면 그 런처로 실행).');
+    console.log('  1. 이 설정 폴더로 Claude Code 를 새로 실행해 statusline 세 줄이 뜨는지 확인한다 (독립 환경이면 그 런처로 실행).');
     console.log('     Fable Wk 는 이 설정 폴더에 로그인(.credentials.json)이 있어야 표시된다.');
     console.log(`  2. 위젯 배치를 바꾸려면: ccstatusline --config "${layoutFile}"`);
     const undo = [`${widgetDir} 삭제`];
